@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Services Dispatch System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form input, form select, form button {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #218838;
+        }
+        .time-buttons button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .time-buttons button:hover {
+            background-color: #0056b3;
+        }
+        .time-buttons div {
+            margin-top: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ambulance Services Dispatch System</h1>
+    </header>
+    <div class="container">
+        <h2>Team Sign Up</h2>
+        <form id="teamForm">
+            <input type="text" id="teamCode" placeholder="Enter Team Code" required>
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div id="timeSection" style="display: none;">
+            <h2>Current Time and Date</h2>
+            <p id="currentTime"></p>
+
+            <h2>Actions</h2>
+            <div class="time-buttons">
+                <button data-action="timeOfCall">Time of Call</button>
+                <div id="timeOfCall"></div>
+
+                <button data-action="dispatchTime">Dispatch Time</button>
+                <div id="dispatchTime"></div>
+
+                <button data-action="enRoute">En-Route</button>
+                <div id="enRoute"></div>
+
+                <button data-action="arrival">Arrival</button>
+                <div id="arrival"></div>
+
+                <button data-action="departure">Departure</button>
+                <div id="departure"></div>
+
+                <button data-action="destination">Destination</button>
+                <div id="destination"></div>
+
+                <button data-action="inService">In-Service</button>
+                <div id="inService"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const teamForm = document.getElementById('teamForm');
+        const timeSection = document.getElementById('timeSection');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const timeButtons = document.querySelectorAll('.time-buttons button');
+
+        const updateCurrentTime = () => {
+            const now = new Date();
+            const gmtPlus3 = new Date(now.getTime() + 3 * 60 * 60 * 1000);
+            currentTimeDisplay.textContent = gmtPlus3.toLocaleString();
+        };
+
+        setInterval(updateCurrentTime, 1000);
+
+        teamForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            timeSection.style.display = 'block';
+            updateCurrentTime();
+        });
+
+        timeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const action = button.getAttribute('data-action');
+                const timeField = document.getElementById(action);
+                const now = new Date();
+                const gmtPlus3 = new Date(now.getTime() + 3 * 60 * 60 * 1000);
+                timeField.textContent = gmtPlus3.toLocaleTimeString();
+            });
+        });
+    </script>
+</body>
+</html>
